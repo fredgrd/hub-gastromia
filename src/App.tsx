@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+
+import LandingPage from "./features/landing-page/landing-page";
+import Hub from "./features/hub/hub";
+
+import Toast from "./features/toast/toast";
+import { useAppDispatch } from "./app/hooks";
+import { fetchRemoteOperator } from "./app/store-slices/auth-slice";
+import OrdersPage from "./features/orders-page/orders-page";
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchRemoteOperator());
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.StrictMode>
+      <div>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/hub/:menu" element={<Hub />} />
+        </Routes>
+        <Toast />
+      </div>
+    </React.StrictMode>
   );
 }
 
