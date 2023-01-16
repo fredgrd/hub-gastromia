@@ -1,0 +1,105 @@
+.hubmenu {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+
+  padding: 24px;
+
+  border-right: 1px solid #e3e3e3;
+  background-color: white;
+}
+
+.hubmenu-menubtn {
+  padding: 8px 4px;
+  display: flex;
+  align-items: center;
+
+  border: 2px solid white;
+  border-radius: 10px;
+  background-color: white;
+
+  cursor: pointer;
+}
+
+.hubmenu-menubtn:active {
+  background-color: #f6f6f6;
+}
+
+.hubmenu-menubtn-icon {
+  height: 24px;
+  width: 24px;
+}
+
+.hubmenu-menubtn-title {
+  margin-left: 4px;
+
+  line-height: 22px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hubmenu-operatordrawer {
+  position: relative;
+
+  margin-top: auto;
+  padding: 12px 0px;
+
+  border-top: 1px solid #e3e3e3;
+}
+
+.hubmenu-operatordrawer-info {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.hubmenu-operator-icon {
+  height: 18px;
+  width: 18px;
+}
+
+.hubmenu-operator-name {
+  margin-left: 4px;
+
+  font-size: 12px;
+  font-weight: 500;
+  color: #b0b0b0;
+}
+
+.hubmenu-operatordrawer-logoutdrawer {
+  position: absolute;
+  left: 90%;
+  top: 0px;
+
+  padding: 12px;
+
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
+}
+
+.hubmenu-operatordrawer-logoutdrawer-logoutbtn {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+
+  border: none;
+  background-color: white;
+}
+
+.hubmenu-operatordrawer-logoutdrawer-logoutbtn-icon {
+  height: 18px;
+  width: 18px;
+}
+
+.hubmenu-operatordrawer-logoutdrawer-logoutbtn-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ff8a8a;
+}

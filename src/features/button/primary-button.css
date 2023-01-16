@@ -1,0 +1,12 @@
+.gastromiakit-primarybutton-button {
+  height: 55px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  font-size: 16px;
+  font-weight: 700;
+}

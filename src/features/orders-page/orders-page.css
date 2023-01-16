@@ -1,0 +1,115 @@
+.orderspage {
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.orderspage-activeorders {
+  height: 100%;
+  width: 300px;
+  flex-shrink: 0;
+
+  padding: 92px 24px 24px 24px;
+
+  overflow-y: scroll;
+}
+
+.orderspage-activeorders-filters {
+  position: fixed;
+  top: 0px;
+  left: 200px;
+  width: 300px;
+
+  padding: 24px 24px 8px 24px;
+
+  background-color: #f6f6f6;
+}
+
+.orderspage-activeorders-filters-statusfilters {
+  display: flex;
+  gap: 4px;
+}
+
+.orderspage-filterbtn {
+  height: 32px;
+
+  padding: 0px 14px;
+
+  cursor: pointer;
+
+  border: none;
+  border-radius: 16px;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.orderspage-activeorders-orders {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.orderspage-activeorders-filters-sort {
+  position: relative;
+
+  margin-top: 8px;
+}
+
+.orderspage-sortbtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  line-height: 18px;
+  font-size: 12px;
+  font-weight: 400;
+
+  border: none;
+  background-color: transparent;
+}
+
+.orderspage-sortbtn-popup {
+  position: absolute;
+  top: 20px;
+  left: 32px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+
+  padding: 5px;
+
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
+}
+
+.orderspage-sortbtn-popup-btn {
+  padding: 4px 4px;
+
+  cursor: pointer;
+
+  border-radius: 5px;
+  border: 2px solid white;
+  background-color: white;
+
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.orderspage-sortbtn-popup-btn:hover {
+  background-color: #f6f6f6;
+}
+
+.orderspage-sortbtn-popup-btn:active {
+  background-color: #f6f6f6;
+}
+
+.orderspage-details {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  overflow-y: scroll;
+}

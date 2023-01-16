@@ -1,0 +1,33 @@
+.simpleinput {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.simpleinput-label {
+  line-height: 22px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.simpleinput-input {
+  height: 36px;
+
+  padding: 0px 8px;
+
+  border: 1px solid #e3e3e3;
+  border-radius: 5px;
+  background-color: white;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #343537;
+}
+
+.simpleinput-input:focus {
+  outline: 2px solid #00ad0a;
+}

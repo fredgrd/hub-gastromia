@@ -1,0 +1,15 @@
+.orderpickuptime {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px 10px;
+
+  border-radius: 8px;
+  background-color: #ffe676;
+}
+
+.orderpickuptime-interval {
+  font-size: 12px;
+  font-weight: 600;
+}
