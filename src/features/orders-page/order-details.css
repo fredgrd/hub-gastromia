@@ -3,7 +3,6 @@
 }
 
 .orderdetails-card {
-  height: 2000px;
   width: 100%;
   display: flex;
 
@@ -59,6 +58,8 @@
   align-items: center;
   justify-content: center;
 
+  cursor: pointer;
+  
   padding: 0px;
   margin: 4px 0px;
 

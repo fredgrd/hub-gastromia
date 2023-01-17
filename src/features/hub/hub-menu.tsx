@@ -8,10 +8,12 @@ import {
 import "./hub-menu.css";
 
 import { ReactComponent as GastromiaLogo } from "../../assets/gastromia-logo@24px.svg";
-import OrderGrey from "../../assets/order-grey@24px.png";
-import OrderGreen from "../../assets/order-green@24px.png";
-import ProductGrey from "../../assets/product-grey@24px.png";
-import ProductGreen from "../../assets/product-green@24px.png";
+import OrderGrey from "../../assets/order-grey@512px.png";
+import OrderGreen from "../../assets/order-green@512px.png";
+import TimeGrey from "../../assets/time-grey@512px.png";
+import TimeGreen from "../../assets/time-green@512px.png";
+import ProductGrey from "../../assets/product-grey@512px.png";
+import ProductGreen from "../../assets/product-green@512px.png";
 import Operator from "../../assets/operator@24px.png";
 import LogoutRed from "../../assets/logout-red@24px.png";
 import useClickOutside from "../../utils/useClickOutside";
@@ -69,6 +71,22 @@ const HubMenu: React.FC = () => {
           style={{ color: menu === "orders" ? "" : "#b0b0b0" }}
         >
           Orders
+        </span>
+      </button>
+
+      <button
+        className="hubmenu-menubtn"
+        onClick={() => navigate("/hub/history")}
+      >
+        <img
+          className="hubmenu-menubtn-icon"
+          src={menu === "history" ? TimeGreen : TimeGrey}
+        />
+        <span
+          className="hubmenu-menubtn-title"
+          style={{ color: menu === "history" ? "" : "#b0b0b0" }}
+        >
+          History
         </span>
       </button>
 

@@ -72,6 +72,7 @@
 }
 
 .hubmenu-operatordrawer-logoutdrawer {
+  z-index: 1000;
   position: absolute;
   left: 90%;
   top: 0px;

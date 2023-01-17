@@ -20,6 +20,25 @@ export const fetchActiveOrders = async (): Promise<Order[]> => {
   }
 };
 
+export const fetchAllOrders = async (): Promise<Order[]> => {
+  try {
+    const response = await axios.get("/order/orders/all", {
+      withCredentials: true,
+    });
+    const orders: Order[] | any = response.data.orders;
+
+    if (orders && areOrders(orders)) {
+      return orders;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    console.log(`FetchAllOrders error: ${axiosError.message}`);
+    return [];
+  }
+};
+
 export const fetchOrder = async (orderID: string): Promise<Order | null> => {
   try {
     const response = await axios.get(`/order?o=${orderID}`, {

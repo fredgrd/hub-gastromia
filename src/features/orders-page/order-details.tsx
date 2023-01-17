@@ -7,6 +7,7 @@ import OrderDetailsItem from "./order-details-item";
 import { fetchOrder, updateOrderStatus } from "../../app/services/order-api";
 import { useAppDispatch } from "../../app/hooks";
 import { setToastState } from "../../app/store-slices/app-slice";
+import LoadingSpinner from "../loading-spinner/loading-spinner";
 
 const OrderDetails: React.FC<{
   orderID: string;
@@ -68,7 +69,7 @@ const OrderDetails: React.FC<{
     }
 
     if (isLoading) {
-      return <div>Loading</div>;
+      return <LoadingSpinner />;
     }
 
     if (order.status === "submitted") {
@@ -145,7 +146,7 @@ const OrderDetails: React.FC<{
   };
 
   if (!order) {
-    return <div>Loading</div>;
+    return <LoadingSpinner />;
   }
 
   return (

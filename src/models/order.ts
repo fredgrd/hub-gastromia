@@ -43,3 +43,35 @@ export const areOrders = (orders: any[]): orders is Order[] => {
 
   return areOrders === 1;
 };
+
+export const formatStatus = (status: string): string => {
+  if (status === "submitted") {
+    return "Inviato";
+  }
+
+  if (status === "accepted") {
+    return "Accettato";
+  }
+
+  if (status === "ready") {
+    return "Pronto";
+  }
+
+  if (status === "completed") {
+    return "Completato";
+  }
+
+  if (status === "stalled") {
+    return "Fermo";
+  }
+
+  if (status === "refunded") {
+    return "Rimborsato";
+  }
+
+  if (status === "rejected") {
+    return "Rifiutato";
+  }
+
+  return "";
+};
