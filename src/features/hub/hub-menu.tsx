@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
@@ -8,15 +8,6 @@ import {
 import "./hub-menu.css";
 
 import { ReactComponent as GastromiaLogo } from "../../assets/gastromia-logo@24px.svg";
-import OrderGrey from "../../assets/order-grey@512px.png";
-import OrderGreen from "../../assets/order-green@512px.png";
-import TimeGrey from "../../assets/time-grey@512px.png";
-import TimeGreen from "../../assets/time-green@512px.png";
-import ProductGrey from "../../assets/product-grey@512px.png";
-import ProductGreen from "../../assets/product-green@512px.png";
-import Operator from "../../assets/operator@24px.png";
-import LogoutRed from "../../assets/logout-red@24px.png";
-import useClickOutside from "../../utils/useClickOutside";
 import { logout } from "../../app/services/auth-api";
 import { setToastState } from "../../app/store-slices/app-slice";
 import { Button, Dropdown, Space } from "antd";
@@ -27,18 +18,38 @@ import {
   ClockCircleTwoTone,
   TagsTwoTone,
   TagTwoTone,
-  UserOutlined,
 } from "@ant-design/icons";
+import {
+  fetchLocationStatus,
+  updateLocationStatus,
+} from "../../app/services/location-api";
 
 const HubMenu: React.FC = () => {
-  const [isLogourDrawerOpen, setIsLogoutDrawerOpen] = useState<boolean>(false);
-  const operator = useAppSelector(selectCurrentOperator);
+  const [status, setStatus] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { menu } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const logoutDrawer = useRef<HTMLDivElement>(null);
 
-  useClickOutside(logoutDrawer, () => setIsLogoutDrawerOpen(false));
+  useEffect(() => {
+    const fetchStatus = async () => {
+      const isOpen = await fetchLocationStatus();
+
+      if (isOpen !== null) {
+        setStatus(isOpen);
+      } else {
+        setToastState({
+          isOpen: true,
+          message: "We could not update the status of the location",
+        });
+      }
+    };
+
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 120000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const onMenuClick: MenuProps["onClick"] = (e) => {
     console.log("click", e.key);
@@ -77,7 +88,32 @@ const HubMenu: React.FC = () => {
     }
   };
 
-  console.log(menu);
+  const updateStatus = async () => {
+    if (isLoading) {
+      return;
+    }
+
+    setIsLoading(true);
+
+    const isOpen = await updateLocationStatus(!status);
+
+    console.log("STATUS", isOpen);
+
+    if (isOpen !== null) {
+      console.log("SET STATUS", isOpen);
+      setStatus(isOpen);
+    } else {
+      dispatch(
+        setToastState({
+          isOpen: true,
+          message: "We could not update the status of the location",
+        })
+      );
+    }
+
+    setIsLoading(false);
+  };
+
   return (
     <div className="hubmenu">
       <div className="hubmenu-logo">
@@ -166,7 +202,17 @@ const HubMenu: React.FC = () => {
       <div className="hubmenu-operatordrawer">
         <Dropdown.Button
           menu={{ items, onClick: onMenuClick }}
-        >{`${operator?.name} ${operator?.surname}`}</Dropdown.Button>
+        >{`Operator`}</Dropdown.Button>
+        <Button
+          type="primary"
+          style={{ marginTop: "10px" }}
+          block
+          danger={status}
+          onClick={updateStatus}
+          loading={isLoading}
+        >
+          {status ? "Close" : "Open"}
+        </Button>
       </div>
     </div>
   );

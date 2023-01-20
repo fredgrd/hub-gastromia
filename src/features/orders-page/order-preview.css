@@ -1,43 +1,9 @@
-.orderpreview {
-  padding: 16px;
-
-  cursor: pointer;
-
-  border-radius: 10px;
-  border: 1px solid #e3e3e3;
-  background-color: white;
-}
-
-.orderpreview-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.orderpreview-code {
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.orderpreview-products {
-  display: flex;
-  flex-direction: column;
-
-  margin-top: 4px;
-}
-
-.orderpreview-products-info {
-  font-size: 12px;
-  font-weight: 400;
-  color: "#757575";
-}
-
 .orderpreview-products-previews {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
 
-  margin-top: 4px;
+  margin-top: 10px;
 }
 
 .orderpreview-products-preview {
@@ -46,5 +12,5 @@
 
   object-fit: cover;
 
-  border-radius: 5px;
+  border-radius: 3px;
 }

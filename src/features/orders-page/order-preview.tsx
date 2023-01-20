@@ -1,24 +1,50 @@
 import React from "react";
 import { Order } from "../../models/order";
 import flattenCart from "../../utils/flattenCard";
-import OrderPickupTime from "./order-pickup-time";
+import formatMinuteTime from "../../utils/formatMinuteTime";
 import "./order-preview.css";
+
+import { Badge, Card, Typography } from "antd";
+const { Text } = Typography;
+
+const formatColor = (start: number, time: number): string => {
+  console.log(start, time, start - time);
+
+  if (start - time <= 10) {
+    return "red";
+  }
+
+  if (start - time <= 20) {
+    return "pink";
+  }
+
+  return "blue";
+};
 
 const OrderPreview: React.FC<{
   order: Order;
   onClick: (order: Order) => void;
 }> = ({ order, onClick }) => {
   const orderCount = order.items.reduce((acc, curr) => acc + curr.quantity, 0);
+  const intervals = order.interval.split("-");
+  const start = formatMinuteTime(Number(intervals[0]));
+  const end = formatMinuteTime(Number(intervals[1]));
+  const date = new Date();
+  const currentMinuteTime = date.getHours() * 60 + date.getUTCMinutes();
+
   return (
-    <div className="orderpreview" onClick={() => onClick(order)}>
-      <div className="orderpreview-header">
-        <span className="orderpreview-code">{order.code}</span>
-        <OrderPickupTime interval={order.interval} />
-      </div>
-      <div className="orderpreview-products">
-        <span className="orderpreview-products-info">{`${orderCount} ${
+    <Badge.Ribbon
+      text={`${start} - ${end}`}
+      color={formatColor(Number(intervals[0]), currentMinuteTime)}
+    >
+      <Card onClick={() => onClick(order)}>
+        <div style={{ width: "100%" }}>
+          <Text strong>{order.code}</Text> <Badge count={orderCount} />
+        </div>
+
+        <Text type="secondary">{`${orderCount} ${
           orderCount > 1 ? "articoli" : "articolo"
-        } • €${(order.total / 1000).toFixed(2)}`}</span>
+        } • €${(order.total / 1000).toFixed(2)}`}</Text>
         <div className="orderpreview-products-previews">
           {flattenCart(order.items).map((item, idx) => (
             <img
@@ -27,8 +53,8 @@ const OrderPreview: React.FC<{
             />
           ))}
         </div>
-      </div>
-    </div>
+      </Card>
+    </Badge.Ribbon>
   );
 };
 

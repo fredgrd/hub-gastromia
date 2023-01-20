@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Order } from "../../models/order";
 import "./order-details.css";
 
-import OrderPickupTime from "./order-pickup-time";
 import OrderDetailsItem from "./order-details-item";
 import { fetchOrder, updateOrderStatus } from "../../app/services/order-api";
 import { useAppDispatch } from "../../app/hooks";
 import { setToastState } from "../../app/store-slices/app-slice";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
+
+import { Badge, Button, Card, Divider, Space, Typography } from "antd";
+const { Text, Paragraph, Title } = Typography;
 
 const OrderDetails: React.FC<{
   orderID: string;
@@ -68,23 +70,19 @@ const OrderDetails: React.FC<{
       return null;
     }
 
-    if (isLoading) {
-      return <LoadingSpinner />;
-    }
-
     if (order.status === "submitted") {
       return (
-        <React.Fragment>
-          <button
-            className="orderdetails-statusbtn"
-            style={{ backgroundColor: "#00AD0A" }}
+        <Space style={{ marginTop: "10px" }}>
+          <Button
+            type="primary"
+            loading={isLoading}
             onClick={() => updateStatus("accepted")}
           >
-            <span>Accept</span>
-          </button>
-          <button
-            className="orderdetails-statusbtn"
-            style={{ backgroundColor: "#E02F2F" }}
+            Accept
+          </Button>
+          <Button
+            danger
+            loading={isLoading}
             onClick={() => {
               const rejectConfirmation = window.confirm(
                 "Are you sure you want to reject the order?"
@@ -95,28 +93,28 @@ const OrderDetails: React.FC<{
               }
             }}
           >
-            <span>Reject</span>
-          </button>
-        </React.Fragment>
+            Reject
+          </Button>
+        </Space>
       );
     }
 
     if (order.status === "accepted") {
       return (
-        <React.Fragment>
-          <button
-            className="orderdetails-statusbtn"
-            style={{ backgroundColor: "#00AD0A" }}
+        <Space style={{ marginTop: "10px" }}>
+          <Button
+            type="primary"
+            loading={isLoading}
             onClick={() => updateStatus("ready")}
           >
-            <span>Ready</span>
-          </button>
-          <button
-            className="orderdetails-statusbtn"
-            style={{ backgroundColor: "#E02F2F" }}
+            Ready
+          </Button>
+          <Button
+            danger
+            loading={isLoading}
             onClick={() => {
               const rejectConfirmation = window.confirm(
-                "Are you sure you want to reject the order?"
+                "Are you sure you want to reject or refund the order?"
               );
 
               if (rejectConfirmation) {
@@ -124,23 +122,23 @@ const OrderDetails: React.FC<{
               }
             }}
           >
-            <span>Reject</span>
-          </button>
-        </React.Fragment>
+            Reject / Refund
+          </Button>
+        </Space>
       );
     }
 
     if (order.status === "ready") {
       return (
-        <React.Fragment>
-          <button
-            className="orderdetails-statusbtn"
-            style={{ backgroundColor: "#00AD0A" }}
+        <Space style={{ marginTop: "10px" }}>
+          <Button
+            type="primary"
+            loading={isLoading}
             onClick={() => updateStatus("completed")}
           >
-            <span>Complete</span>
-          </button>
-        </React.Fragment>
+            Complete
+          </Button>
+        </Space>
       );
     }
   };
@@ -150,29 +148,56 @@ const OrderDetails: React.FC<{
   }
 
   return (
-    <div className="orderdetails">
-      <div className="orderdetails-card">
-        <div className="orderdetails-content">
-          <div className="orderdetails-content-header">
-            <span className="orderdetails-content-heading">{order.code}</span>
-            <OrderPickupTime interval={order.interval} />
-          </div>
+    <Badge.Ribbon text={`12:45 - 13:00`} color="red">
+      <Card>
+        <Title level={3} style={{ margin: "0px" }}>
+          {order.code}
+        </Title>
+        <div
+          style={{
+            display: "flex",
 
-          <div className="orderdetails-content-summary">
-            <span className="orderdetails-content-summary-heading">{`${count} ${
-              count > 1 ? "articoli" : "articolo"
-            } • €${(order.total / 1000).toFixed(2)}`}</span>
+            justifyContent: "space-between",
+          }}
+        >
+          <div>
+            <div>
+              O.UUID:{" "}
+              <Paragraph
+                copyable
+                style={{ display: "inline-block", margin: "0px" }}
+              >
+                {order._id}
+              </Paragraph>
+            </div>
+            <div>
+              U.UUID:{" "}
+              <Paragraph
+                copyable
+                style={{ display: "inline-block", margin: "0px" }}
+              >
+                {order.user_id}
+              </Paragraph>
+            </div>
           </div>
-
-          <div className="orderdetails-content-products">
-            {order.items.map((item, idx) => (
-              <OrderDetailsItem item={item} key={idx} />
-            ))}
-          </div>
+          {renderStatusButtons()}
         </div>
-        <div className="orderdetails-status">{renderStatusButtons()}</div>
-      </div>
-    </div>
+
+        <Title level={4}>{`${count} ${
+          count > 1 ? "articoli" : "articolo"
+        } • €${(order.total / 1000).toFixed(2)}`}</Title>
+
+        <div className="orderdetails-content-products">
+          {order.items.map((item, idx) => (
+            <OrderDetailsItem item={item} key={idx} />
+          ))}
+        </div>
+        <Divider></Divider>
+        <Text strong mark>
+          Payment method:{order.card_payment ? " CARD" : " CASH"}
+        </Text>
+      </Card>
+    </Badge.Ribbon>
   );
 };
 

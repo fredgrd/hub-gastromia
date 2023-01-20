@@ -4,14 +4,13 @@ import { Order } from "../../models/order";
 import OrderPreview from "./order-preview";
 import "./orders-page.css";
 
-import { ReactComponent as ArrowDownIcon } from "../../assets/arrow-down@8px.svg";
-import useClickOutside from "../../utils/useClickOutside";
 import {
   sortOrderByArrival,
   sortOrdersByInterval,
 } from "../../utils/sortOrders";
-import AcceptedOrders from "./orders-page-accepted-orders";
+
 import OrderDetails from "./order-details";
+import { Radio } from "antd";
 
 const acceptedFilter: string[] = ["accepted", "ready", "stalled"];
 
@@ -22,7 +21,6 @@ const OrdersPage: React.FC = () => {
   const [selectedOrder, setSelectedOrder] = useState<string | undefined>();
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [sortFilter, setSortFilter] = useState<string>("arrival");
-  const [showSortPopup, setShowSortPopup] = useState<boolean>(false);
   const sortPopup = useRef<HTMLDivElement>(null);
 
   const fetchOrders = async () => {
@@ -39,8 +37,6 @@ const OrdersPage: React.FC = () => {
 
     return () => clearInterval(interval);
   }, []);
-
-  useClickOutside(sortPopup, () => setShowSortPopup(false));
 
   const updateOrders = (orders: Order[], sort: string) => {
     if (sort === "pickup") {
@@ -110,82 +106,41 @@ const OrdersPage: React.FC = () => {
     <div className="orderspage">
       <div className="orderspage-activeorders">
         <div className="orderspage-activeorders-filters">
-          <div className="orderspage-activeorders-filters-statusfilters">
-            <button
-              className="orderspage-filterbtn"
-              style={{
-                backgroundColor: statusFilter === "all" ? "white" : "#E4E4E4",
-              }}
-              onClick={() => setStatusFilter("all")}
-            >
+          <Radio.Group
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
+            <Radio.Button type="default" value={"all"}>
               All
-            </button>
-            <button
-              className="orderspage-filterbtn"
-              style={{
-                backgroundColor:
-                  statusFilter === "accepted" ? "white" : "#E4E4E4",
-              }}
-              onClick={() => setStatusFilter("accepted")}
-            >
+            </Radio.Button>
+            <Radio.Button type="default" value={"accepted"}>
               Accepted
-            </button>
-            <button
-              className="orderspage-filterbtn"
-              style={{
-                backgroundColor:
-                  statusFilter === "pending" ? "white" : "#E4E4E4",
-              }}
-              onClick={() => setStatusFilter("pending")}
-            >
+            </Radio.Button>
+            <Radio.Button type="default" value={"pending"}>
               Pending
-            </button>
-          </div>
+            </Radio.Button>
+          </Radio.Group>
+
           <div className="orderspage-activeorders-filters-sort">
-            <button
-              className="orderspage-sortbtn"
-              onClick={() => setShowSortPopup(true)}
+            <Radio.Group
+              value={sortFilter}
+              onChange={(e) => {
+                setSortFilter(e.target.value);
+                updateOrders(orders, e.target.value);
+              }}
             >
-              <span>
-                Sort by{" "}
-                <span style={{ fontWeight: 600 }}>
-                  {sortFilter === "arrival" ? "Arrival time" : "Pickup time"}
-                </span>
-              </span>
-
-              <ArrowDownIcon fill="#343537" />
-            </button>
-
-            {showSortPopup && (
-              <div className="orderspage-sortbtn-popup" ref={sortPopup}>
-                <button
-                  className="orderspage-sortbtn-popup-btn"
-                  onClick={() => {
-                    setSortFilter("arrival");
-                    updateOrders(orders, "arrival");
-                    setShowSortPopup(false);
-                  }}
-                >
-                  Arrival time
-                </button>
-                <button
-                  className="orderspage-sortbtn-popup-btn"
-                  onClick={() => {
-                    setSortFilter("pickup");
-                    updateOrders(orders, "pickup");
-                    setShowSortPopup(false);
-                  }}
-                >
-                  Pickup time
-                </button>
-              </div>
-            )}
+              <Radio type="default" value={"arrival"}>
+                Arrival time
+              </Radio>
+              <Radio type="default" value={"pickup"}>
+                Pickup time
+              </Radio>
+            </Radio.Group>
           </div>
         </div>
         <div className="orderspage-activeorders-orders">{renderFilter()}</div>
       </div>
       <div className="orderspage-details">
-        <AcceptedOrders orders={acceptedOrders} />
         {selectedOrder ? (
           <OrderDetails
             orderID={selectedOrder}
