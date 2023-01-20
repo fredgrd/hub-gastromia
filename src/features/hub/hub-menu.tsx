@@ -19,6 +19,16 @@ import LogoutRed from "../../assets/logout-red@24px.png";
 import useClickOutside from "../../utils/useClickOutside";
 import { logout } from "../../app/services/auth-api";
 import { setToastState } from "../../app/store-slices/app-slice";
+import { Button, Dropdown, Space } from "antd";
+import type { MenuProps } from "antd";
+
+import {
+  CopyTwoTone,
+  ClockCircleTwoTone,
+  TagsTwoTone,
+  TagTwoTone,
+  UserOutlined,
+} from "@ant-design/icons";
 
 const HubMenu: React.FC = () => {
   const [isLogourDrawerOpen, setIsLogoutDrawerOpen] = useState<boolean>(false);
@@ -29,6 +39,21 @@ const HubMenu: React.FC = () => {
   const logoutDrawer = useRef<HTMLDivElement>(null);
 
   useClickOutside(logoutDrawer, () => setIsLogoutDrawerOpen(false));
+
+  const onMenuClick: MenuProps["onClick"] = (e) => {
+    console.log("click", e.key);
+
+    if (e.key === "1") {
+      logoutOnClick();
+    }
+  };
+
+  const items = [
+    {
+      key: "1",
+      label: "Log out",
+    },
+  ];
 
   const logoutOnClick = async () => {
     const logoutConfirmation = window.confirm("Do you wish to logout?");
@@ -55,85 +80,93 @@ const HubMenu: React.FC = () => {
   console.log(menu);
   return (
     <div className="hubmenu">
-      <GastromiaLogo />
+      <div className="hubmenu-logo">
+        <GastromiaLogo style={{ marginLeft: "16px" }} />
+      </div>
 
-      <button
-        className="hubmenu-menubtn"
-        style={{ marginTop: "32px" }}
-        onClick={() => navigate("/hub/orders")}
-      >
-        <img
-          className="hubmenu-menubtn-icon"
-          src={menu === "orders" ? OrderGreen : OrderGrey}
-        />
-        <span
-          className="hubmenu-menubtn-title"
-          style={{ color: menu === "orders" ? "" : "#b0b0b0" }}
+      <Space direction="vertical">
+        <Button
+          icon={
+            menu === "orders" ? (
+              <ClockCircleTwoTone twoToneColor="#eb2f96" />
+            ) : (
+              <ClockCircleTwoTone twoToneColor="#b0b0b0" />
+            )
+          }
+          type="text"
+          size="large"
+          style={{
+            marginTop: "32px",
+            fontWeight: "500",
+            color: menu === "orders" ? "#343537" : "#909090",
+          }}
+          onClick={() => navigate("/hub/orders")}
         >
-          Orders
-        </span>
-      </button>
-
-      <button
-        className="hubmenu-menubtn"
-        onClick={() => navigate("/hub/history")}
-      >
-        <img
-          className="hubmenu-menubtn-icon"
-          src={menu === "history" ? TimeGreen : TimeGrey}
-        />
-        <span
-          className="hubmenu-menubtn-title"
-          style={{ color: menu === "history" ? "" : "#b0b0b0" }}
+          Live orders
+        </Button>
+        <Button
+          icon={
+            menu === "history" ? (
+              <CopyTwoTone twoToneColor="#eb2f96" />
+            ) : (
+              <CopyTwoTone twoToneColor="#b0b0b0" />
+            )
+          }
+          type="text"
+          size="large"
+          style={{
+            marginTop: "10px",
+            fontWeight: "500",
+            color: menu === "history" ? "#343537" : "#909090",
+          }}
+          onClick={() => navigate("/hub/history")}
         >
           History
-        </span>
-      </button>
-
-      <button
-        className="hubmenu-menubtn"
-        onClick={() => navigate("/hub/products")}
-      >
-        <img
-          className="hubmenu-menubtn-icon"
-          src={menu === "products" ? ProductGreen : ProductGrey}
-        />
-        <span
-          className="hubmenu-menubtn-title"
-          style={{ color: menu === "products" ? "" : "#b0b0b0" }}
+        </Button>
+        <Button
+          icon={
+            menu === "items" ? (
+              <TagTwoTone twoToneColor="#eb2f96" />
+            ) : (
+              <TagTwoTone twoToneColor="#b0b0b0" />
+            )
+          }
+          type="text"
+          size="large"
+          style={{
+            marginTop: "10px",
+            fontWeight: "500",
+            color: menu === "items" ? "#343537" : "#909090",
+          }}
+          onClick={() => navigate("/hub/items")}
         >
-          Products
-        </span>
-      </button>
+          Items
+        </Button>
+        <Button
+          icon={
+            menu === "attributes" ? (
+              <TagsTwoTone twoToneColor="#eb2f96" />
+            ) : (
+              <TagsTwoTone twoToneColor="#b0b0b0" />
+            )
+          }
+          type="text"
+          size="large"
+          style={{
+            marginTop: "10px",
+            fontWeight: "500",
+            color: menu === "attributes" ? "#343537" : "#909090",
+          }}
+          onClick={() => navigate("/hub/attributes")}
+        >
+          Attributes
+        </Button>
+      </Space>
 
       <div className="hubmenu-operatordrawer">
-        <div
-          className="hubmenu-operatordrawer-info"
-          onClick={() => setIsLogoutDrawerOpen(true)}
-        >
-          <img className="hubmenu-operator-icon" src={Operator} />
-          <span className="hubmenu-operator-name">{`${operator?.name} ${operator?.surname}`}</span>
-        </div>
-
-        {isLogourDrawerOpen && (
-          <div
-            className="hubmenu-operatordrawer-logoutdrawer"
-            ref={logoutDrawer}
-          >
-            <button
-              className="hubmenu-operatordrawer-logoutdrawer-logoutbtn"
-              onClick={logoutOnClick}
-            >
-              <img
-                className="hubmenu-operatordrawer-logoutdrawer-logoutbtn-icon"
-                src={LogoutRed}
-              />
-              <span className="hubmenu-operatordrawer-logoutdrawer-logoutbtn-title">
-                Logout
-              </span>
-            </button>
-          </div>
-        )}
+        <Dropdown.Button
+          menu={{ items, onClick: onMenuClick }}
+        >{`${operator?.name} ${operator?.surname}`}</Dropdown.Button>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ import "./toast.css";
 
 import ReactPortal from "../react-portal/react-portal";
 
-import AlertIcon from "../../assets/alert@24px.png";
+import { MessageOutlined } from "@ant-design/icons";
 
 const Toast: React.FC = () => {
   const state = useSelector(selectToastState);
@@ -38,7 +38,7 @@ const Toast: React.FC = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <img className="toast-icon" src={AlertIcon} />
+            <MessageOutlined />
             <div className="toast-body">
               <p className="toast-text">{state.message}</p>
             </div>

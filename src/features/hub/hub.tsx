@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import AuthProtect from "../auth-protect/auth-protect";
 import HistoryPage from "../history-page/history-page";
 import OrdersPage from "../orders-page/orders-page";
-import ProductsPage from "../producs-page/products-page";
+import ItemsPage from "../items-page/items-page";
+import AttributesPage from "../attributes-page/attributes-page";
 import HubMenu from "./hub-menu";
 import "./hub.css";
 
@@ -19,8 +20,12 @@ const Hub: React.FC = () => {
       return <HistoryPage />;
     }
 
-    if (menu === "products") {
-      return <ProductsPage />;
+    if (menu === "items") {
+      return <ItemsPage />;
+    }
+
+    if (menu === "attributes") {
+      return <AttributesPage />;
     }
   };
   return (

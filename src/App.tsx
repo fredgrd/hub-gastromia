@@ -8,6 +8,7 @@ import Toast from "./features/toast/toast";
 import { useAppDispatch } from "./app/hooks";
 import { fetchRemoteOperator } from "./app/store-slices/auth-slice";
 import OrdersPage from "./features/orders-page/orders-page";
+import ItemDetails from "./features/item-details/item-details";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/hub/:menu" element={<Hub />} />
+          <Route path="/items/:id" element={<ItemDetails />} />
         </Routes>
         <Toast />
       </div>
