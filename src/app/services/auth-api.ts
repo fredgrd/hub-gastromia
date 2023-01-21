@@ -1,12 +1,14 @@
 import axios, { AxiosError } from "axios";
 import { isOperator, Operator } from "../../models/operator";
 
+const baseUrl = "https://api.gastromia.com";
+
 export const login = async (
   email: string,
   password: string
 ): Promise<Operator | null> => {
   try {
-    const response = await axios.post("/operator/login", {
+    const response = await axios.post(baseUrl + "/operator/login", {
       email: email,
       password: password,
     });
