@@ -1,8 +1,10 @@
 import axios, { AxiosError } from "axios";
 
+const baseUrl = "https://api.gastromia.com";
+
 export const fetchLocationStatus = async (): Promise<boolean | null> => {
   try {
-    const response = await axios.get("/location/status");
+    const response = await axios.get(baseUrl + "/location/status");
     const isOpen: boolean | any = response.data.is_open;
 
     if (typeof isOpen === "boolean") {
@@ -22,7 +24,7 @@ export const updateLocationStatus = async (
 ): Promise<boolean | null> => {
   try {
     const response = await axios.patch(
-      "/location/status/update",
+      baseUrl + "/location/status/update",
       { status: status },
       { withCredentials: true }
     );

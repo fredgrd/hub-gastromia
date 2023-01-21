@@ -1,12 +1,14 @@
 import axios, { AxiosError } from "axios";
 
+const baseUrl = "https://api.gastromia.com";
+
 export const uploadImageToS3 = async (
   base64: string,
   type: string
 ): Promise<string | null> => {
   try {
     const response = await axios.post(
-      "/storage/image/upload",
+      baseUrl + "/storage/image/upload",
       { base64: base64, type: type },
       { withCredentials: true }
     );

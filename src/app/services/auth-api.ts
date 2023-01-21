@@ -32,7 +32,7 @@ export const login = async (
 
 export const logout = async (): Promise<boolean> => {
   try {
-    const response = await axios.get("/operator/logout", {
+    const response = await axios.get(baseUrl + "/operator/logout", {
       withCredentials: true,
     });
 
@@ -50,7 +50,7 @@ export const logout = async (): Promise<boolean> => {
 
 export const fetchOperator = async (): Promise<Operator | null> => {
   try {
-    const response = await axios.get("/operator/fetch", {
+    const response = await axios.get(baseUrl + "/operator/fetch", {
       withCredentials: true,
     });
     const operator: Operator | any = response.data;

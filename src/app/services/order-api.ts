@@ -1,9 +1,11 @@
 import axios, { AxiosError } from "axios";
 import { areOrders, isOrder, Order } from "../../models/order";
 
+const baseUrl = "https://api.gastromia.com";
+
 export const fetchActiveOrders = async (): Promise<Order[]> => {
   try {
-    const response = await axios.get("/order/orders/active", {
+    const response = await axios.get(baseUrl + "/order/orders/active", {
       withCredentials: true,
     });
     const orders: Order[] | any = response.data.orders;
@@ -22,7 +24,7 @@ export const fetchActiveOrders = async (): Promise<Order[]> => {
 
 export const fetchAllOrders = async (): Promise<Order[]> => {
   try {
-    const response = await axios.get("/order/orders/all", {
+    const response = await axios.get(baseUrl + "/order/orders/all", {
       withCredentials: true,
     });
     const orders: Order[] | any = response.data.orders;
@@ -41,7 +43,7 @@ export const fetchAllOrders = async (): Promise<Order[]> => {
 
 export const fetchOrder = async (orderID: string): Promise<Order | null> => {
   try {
-    const response = await axios.get(`/order?o=${orderID}`, {
+    const response = await axios.get(baseUrl + `/order?o=${orderID}`, {
       withCredentials: true,
     });
     const order: Order | any = response.data.order;
@@ -64,7 +66,7 @@ export const updateOrderStatus = async (
 ): Promise<Order | null> => {
   try {
     const response = await axios.patch(
-      "/order/updatestatus",
+      baseUrl + "/order/updatestatus",
       { status: status, order_id: orderID },
       {
         withCredentials: true,

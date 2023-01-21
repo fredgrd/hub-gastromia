@@ -8,9 +8,11 @@ import {
   ItemAttribute,
 } from "../../models/item";
 
+const baseUrl = "https://api.gastromia.com";
+
 export const fetchItem = async (itemID: string): Promise<Item | null> => {
   try {
-    const response = await axios.get(`/items/item?i=${itemID}`);
+    const response = await axios.get(baseUrl + `/items/item?i=${itemID}`);
     const item: Item | any = response.data;
 
     if (item && isItem(item)) {
@@ -27,7 +29,9 @@ export const fetchItem = async (itemID: string): Promise<Item | null> => {
 
 export const fetchAllItems = async (): Promise<Item[]> => {
   try {
-    const response = await axios.get("/items", { withCredentials: true });
+    const response = await axios.get(baseUrl + "/items", {
+      withCredentials: true,
+    });
     const items: Item[] | any = response.data.items;
 
     if (items && areItems(items)) {
@@ -48,7 +52,7 @@ export const updateItem = async (
 ): Promise<Item | null> => {
   try {
     const response = await axios.patch(
-      "/items/item/update",
+      baseUrl + "/items/item/update",
       { item_id: itemID, update: update },
       { withCredentials: true }
     );
@@ -72,7 +76,7 @@ export const createItem = async (newItem: {}): Promise<{
 }> => {
   try {
     const response = await axios.post(
-      "/items/item/create",
+      baseUrl + "/items/item/create",
       { item: newItem },
       { withCredentials: true }
     );
@@ -100,7 +104,7 @@ export const deleteItem = async (
 }> => {
   try {
     const response = await axios.patch(
-      "/items/item/delete",
+      baseUrl + "/items/item/delete",
       { item_id: itemID },
       { withCredentials: true }
     );
@@ -122,7 +126,7 @@ export const deleteItem = async (
 
 export const fetchAllAttributes = async (): Promise<ItemAttribute[]> => {
   try {
-    const response = await axios.get("/items/attribute/all", {
+    const response = await axios.get(baseUrl + "/items/attribute/all", {
       withCredentials: true,
     });
     const attributes: ItemAttribute[] | any = response.data.attributes;
@@ -145,7 +149,7 @@ export const updateAttribute = async (
 ): Promise<ItemAttribute | null> => {
   try {
     const response = await axios.patch(
-      "/items/attribute/update",
+      baseUrl + "/items/attribute/update",
       { attribute_id: attributeID, update: update },
       { withCredentials: true }
     );
@@ -169,7 +173,7 @@ export const createAttribute = async (newAttribute: {}): Promise<{
 }> => {
   try {
     const response = await axios.post(
-      "/items/attribute/create",
+      baseUrl + "/items/attribute/create",
       { attribute: newAttribute },
       { withCredentials: true }
     );
@@ -197,7 +201,7 @@ export const deleteAttribute = async (
 }> => {
   try {
     const response = await axios.patch(
-      "/items/attribute/delete",
+      baseUrl + "/items/attribute/delete",
       { attribute_id: attributeID },
       { withCredentials: true }
     );
@@ -221,9 +225,12 @@ export const searchAttributes = async (
   query: string
 ): Promise<ItemAttribute[]> => {
   try {
-    const response = await axios.get(`/items/attribute/search?k=${query}`, {
-      withCredentials: true,
-    });
+    const response = await axios.get(
+      baseUrl + `/items/attribute/search?k=${query}`,
+      {
+        withCredentials: true,
+      }
+    );
     const attributes: ItemAttribute[] | any = response.data.attributes;
 
     if (attributes && areAttributes(attributes)) {
