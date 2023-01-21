@@ -43,7 +43,7 @@ const OrderPreview: React.FC<{
       text={`${start} - ${end}`}
       color={formatColor(Number(intervals[0]), currentMinuteTime)}
     >
-      <Card onClick={() => onClick(order)}>
+      <Card onClick={() => onClick(order)} style={{ cursor: "pointer" }}>
         <div style={{ width: "100%" }}>
           <Text strong>{order.code}</Text> <Badge count={orderCount} />
         </div>
