@@ -1,0 +1,59 @@
+.historyorder {
+  padding: 10px 16px;
+
+  border-radius: 3px;
+  background-color: white;
+}
+
+.historyorder-header {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.historyorder-code {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.historyorder-itempreviews {
+  display: flex;
+  align-content: center;
+  gap: 4px;
+
+  margin-left: 20px;
+  margin-right: auto;
+}
+
+.historyorder-itempreview {
+  height: 30px;
+  width: 30px;
+
+  border-radius: 5px;
+}
+
+.historyorder-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.historyorder-status {
+  line-height: 22px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.historyorder-id {
+  line-height: 15px;
+  font-size: 10px;
+  font-weight: 400;
+  color: #e3e3e3;
+}
+
+.historyorder-details {
+  margin-top: 16px;
+
+  border-top: 1px solid #e3e3e3;
+}

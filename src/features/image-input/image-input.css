@@ -1,0 +1,44 @@
+.imageinput {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  background-color: #f6f7f8;
+}
+
+.imageinput-info-positioner {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+}
+
+.imageinput-info {
+  text-align: center;
+  line-height: 22px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #9b9b9b;
+}
+
+.imageinput-spinner {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageinput-img {
+  height: 100%;
+  width: 100%;
+}

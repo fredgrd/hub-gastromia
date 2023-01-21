@@ -1,0 +1,32 @@
+.historypage {
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  padding: 0px 24px 24px 24px;
+
+  overflow-y: scroll;
+}
+
+.historypage-search {
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+
+  padding: 24px 0px 4px 0px;
+  background-color: #f6f7f8;
+}
+
+.historypage-search {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.historypage-orders {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  margin-top: 12px;
+}
