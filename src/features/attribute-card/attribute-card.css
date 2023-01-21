@@ -1,6 +1,8 @@
 .attributecard-content {
   width: 140px;
   margin: 0px;
+
+  cursor: pointer;
 }
 
 .attributecard-content-notavailable {

@@ -3,7 +3,7 @@
   width: 140px;
   flex-shrink: 0;
 
-  text-decoration: none;
+  cursor: pointer;
 }
 
 .itemcard-content-notavailable {
