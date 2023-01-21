@@ -8,10 +8,14 @@ export const login = async (
   password: string
 ): Promise<Operator | null> => {
   try {
-    const response = await axios.post(baseUrl + "/operator/login", {
-      email: email,
-      password: password,
-    });
+    const response = await axios.post(
+      baseUrl + "/operator/login",
+      {
+        email: email,
+        password: password,
+      },
+      { withCredentials: true }
+    );
     const operator: Operator | any = response.data;
 
     if (operator && isOperator(operator)) {
