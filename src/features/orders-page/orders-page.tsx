@@ -10,7 +10,7 @@ import {
 } from "../../utils/sortOrders";
 
 import OrderDetails from "./order-details";
-import { Radio } from "antd";
+import { Radio, Segmented } from "antd";
 
 const acceptedFilter: string[] = ["accepted", "ready", "stalled"];
 
