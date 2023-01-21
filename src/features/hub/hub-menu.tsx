@@ -52,8 +52,6 @@ const HubMenu: React.FC = () => {
   }, []);
 
   const onMenuClick: MenuProps["onClick"] = (e) => {
-    console.log("click", e.key);
-
     if (e.key === "1") {
       logoutOnClick();
     }
@@ -97,10 +95,7 @@ const HubMenu: React.FC = () => {
 
     const isOpen = await updateLocationStatus(!status);
 
-    console.log("STATUS", isOpen);
-
     if (isOpen !== null) {
-      console.log("SET STATUS", isOpen);
       setStatus(isOpen);
     } else {
       dispatch(

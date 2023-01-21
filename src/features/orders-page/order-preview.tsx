@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Order } from "../../models/order";
 import flattenCart from "../../utils/flattenCard";
 import formatMinuteTime from "../../utils/formatMinuteTime";
@@ -8,8 +8,6 @@ import { Badge, Card, Typography } from "antd";
 const { Text } = Typography;
 
 const formatColor = (start: number, time: number): string => {
-  console.log(start, time, start - time);
-
   if (start - time <= 10) {
     return "red";
   }
@@ -29,8 +27,16 @@ const OrderPreview: React.FC<{
   const intervals = order.interval.split("-");
   const start = formatMinuteTime(Number(intervals[0]));
   const end = formatMinuteTime(Number(intervals[1]));
-  const date = new Date();
-  const currentMinuteTime = date.getHours() * 60 + date.getUTCMinutes();
+  let currentMinuteTime = 0;
+
+  useEffect(() => {
+    const minuteTimer = setInterval(() => {
+      const date = new Date();
+      currentMinuteTime = date.getHours() * 60 + date.getUTCMinutes();
+    }, 60000);
+
+    return () => clearInterval(minuteTimer);
+  }, []);
 
   return (
     <Badge.Ribbon
@@ -50,6 +56,7 @@ const OrderPreview: React.FC<{
             <img
               className="orderpreview-products-preview"
               src={item.preview_url}
+              key={idx}
             />
           ))}
         </div>

@@ -8,8 +8,29 @@ import { useAppDispatch } from "../../app/hooks";
 import { setToastState } from "../../app/store-slices/app-slice";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
 
-import { Badge, Button, Card, Divider, Space, Typography } from "antd";
+import {
+  Badge,
+  Button,
+  Card,
+  Divider,
+  Popconfirm,
+  Space,
+  Typography,
+} from "antd";
+import formatMinuteTime from "../../utils/formatMinuteTime";
 const { Text, Paragraph, Title } = Typography;
+
+const formatColor = (start: number, time: number): string => {
+  if (start - time <= 10) {
+    return "red";
+  }
+
+  if (start - time <= 20) {
+    return "pink";
+  }
+
+  return "blue";
+};
 
 const OrderDetails: React.FC<{
   orderID: string;
@@ -19,7 +40,17 @@ const OrderDetails: React.FC<{
   const [order, setOrder] = useState<Order | undefined>();
   const [count, setCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  let currentMinuteTime = 0;
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const minuteTimer = setInterval(() => {
+      const date = new Date();
+      currentMinuteTime = date.getHours() * 60 + date.getUTCMinutes();
+    }, 60000);
+
+    return () => clearInterval(minuteTimer);
+  }, []);
 
   useEffect(() => {
     const fetch = async () => {
@@ -80,21 +111,15 @@ const OrderDetails: React.FC<{
           >
             Accept
           </Button>
-          <Button
-            danger
-            loading={isLoading}
-            onClick={() => {
-              const rejectConfirmation = window.confirm(
-                "Are you sure you want to reject the order?"
-              );
-
-              if (rejectConfirmation) {
-                updateStatus("rejected");
-              }
-            }}
+          <Popconfirm
+            title="Are you sure you want to reject the order?"
+            onConfirm={() => updateStatus("rejected")}
+            placement="left"
           >
-            Reject
-          </Button>
+            <Button danger loading={isLoading}>
+              Reject / Refund
+            </Button>
+          </Popconfirm>
         </Space>
       );
     }
@@ -109,21 +134,15 @@ const OrderDetails: React.FC<{
           >
             Ready
           </Button>
-          <Button
-            danger
-            loading={isLoading}
-            onClick={() => {
-              const rejectConfirmation = window.confirm(
-                "Are you sure you want to reject or refund the order?"
-              );
-
-              if (rejectConfirmation) {
-                updateStatus("rejected");
-              }
-            }}
+          <Popconfirm
+            title="Are you sure you want to reject the order?"
+            onConfirm={() => updateStatus("rejected")}
+            placement="left"
           >
-            Reject / Refund
-          </Button>
+            <Button danger loading={isLoading}>
+              Reject / Refund
+            </Button>
+          </Popconfirm>
         </Space>
       );
     }
@@ -131,13 +150,15 @@ const OrderDetails: React.FC<{
     if (order.status === "ready") {
       return (
         <Space style={{ marginTop: "10px" }}>
-          <Button
-            type="primary"
-            loading={isLoading}
-            onClick={() => updateStatus("completed")}
+          <Popconfirm
+            title="Before marking the order completed make sure the customer paid"
+            onConfirm={() => updateStatus("completed")}
+            placement="left"
           >
-            Complete
-          </Button>
+            <Button danger loading={isLoading}>
+              Complete
+            </Button>
+          </Popconfirm>
         </Space>
       );
     }
@@ -148,7 +169,15 @@ const OrderDetails: React.FC<{
   }
 
   return (
-    <Badge.Ribbon text={`12:45 - 13:00`} color="red">
+    <Badge.Ribbon
+      text={`${formatMinuteTime(
+        Number(order.interval.split("-")[0])
+      )} - ${formatMinuteTime(Number(order.interval.split("-")[1]))}`}
+      color={formatColor(
+        Number(order.interval.split("-")[0]),
+        currentMinuteTime
+      )}
+    >
       <Card>
         <Title level={3} style={{ margin: "0px" }}>
           {order.code}
@@ -195,6 +224,12 @@ const OrderDetails: React.FC<{
         <Divider></Divider>
         <Text strong mark>
           Payment method:{order.card_payment ? " CARD" : " CASH"}
+        </Text>
+        <Text strong mark style={{ display: "block" }}>
+          {`Pickup scheduled: ${formatMinuteTime(
+            Number(order.interval.split("-")[0])
+          )} -
+          ${formatMinuteTime(Number(order.interval.split("-")[1]))}`}
         </Text>
       </Card>
     </Badge.Ribbon>
