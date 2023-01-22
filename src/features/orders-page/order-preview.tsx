@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Order } from "../../models/order";
 import flattenCart from "../../utils/flattenCard";
 import formatMinuteTime from "../../utils/formatMinuteTime";
@@ -28,6 +28,8 @@ const OrderPreview: React.FC<{
   const start = formatMinuteTime(Number(intervals[0]));
   const end = formatMinuteTime(Number(intervals[1]));
   let currentMinuteTime = 0;
+  const [opened, setOpened] = useState<boolean>(false);
+  const audio = new Audio("../../assets/sounds/orderbeep.mp3");
 
   useEffect(() => {
     const minuteTimer = setInterval(() => {
@@ -35,17 +37,38 @@ const OrderPreview: React.FC<{
       currentMinuteTime = date.getHours() * 60 + date.getUTCMinutes();
     }, 60000);
 
+    audio.addEventListener("ended", playAudio);
+
     return () => clearInterval(minuteTimer);
   }, []);
+
+  const playAudio = () => {
+    audio.currentTime = 0;
+    audio.play();
+  };
+
+  const stopAudio = () => {
+    audio.removeEventListener("ended", playAudio);
+    audio.pause();
+    audio.currentTime = 0;
+  };
 
   return (
     <Badge.Ribbon
       text={`${start} - ${end}`}
       color={formatColor(Number(intervals[0]), currentMinuteTime)}
     >
-      <Card onClick={() => onClick(order)} style={{ cursor: "pointer" }}>
+      <Card
+        onClick={() => {
+          stopAudio();
+          setOpened(true);
+          onClick(order);
+        }}
+        style={{ cursor: "pointer" }}
+      >
         <div style={{ width: "100%" }}>
-          <Text strong>{order.code}</Text> <Badge count={orderCount} />
+          <Text strong>{order.code}</Text>{" "}
+          {!opened && <Badge count={orderCount} />}
         </div>
 
         <Text type="secondary">{`${orderCount} ${
