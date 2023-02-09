@@ -1,11 +1,14 @@
-import { CartItemSnapshot } from "./cart-snapshot";
+import { CartItemSnapshot } from './cart-snapshot';
 
 export interface Order {
   _id: string;
   code: string;
   user_id: string;
+  user_name: string;
+  user_number: string;
   interval: string;
   items: CartItemSnapshot[];
+  info: string;
   total: number;
   status: string;
   cash_payment: boolean;
@@ -21,8 +24,11 @@ export const isOrder = (order: any): order is Order => {
     unsafeCast._id !== undefined &&
     unsafeCast.code !== undefined &&
     unsafeCast.user_id !== undefined &&
+    unsafeCast.user_name !== undefined &&
+    unsafeCast.user_number !== undefined &&
     unsafeCast.interval !== undefined &&
     unsafeCast.items !== undefined &&
+    unsafeCast.info !== undefined &&
     unsafeCast.total !== undefined &&
     unsafeCast.status !== undefined &&
     unsafeCast.card_payment !== undefined &&
@@ -45,33 +51,33 @@ export const areOrders = (orders: any[]): orders is Order[] => {
 };
 
 export const formatStatus = (status: string): string => {
-  if (status === "submitted") {
-    return "Inviato";
+  if (status === 'submitted') {
+    return 'Inviato';
   }
 
-  if (status === "accepted") {
-    return "Accettato";
+  if (status === 'accepted') {
+    return 'Accettato';
   }
 
-  if (status === "ready") {
-    return "Pronto";
+  if (status === 'ready') {
+    return 'Pronto';
   }
 
-  if (status === "completed") {
-    return "Completato";
+  if (status === 'completed') {
+    return 'Completato';
   }
 
-  if (status === "stalled") {
-    return "Fermo";
+  if (status === 'stalled') {
+    return 'Fermo';
   }
 
-  if (status === "refunded") {
-    return "Rimborsato";
+  if (status === 'refunded') {
+    return 'Rimborsato';
   }
 
-  if (status === "rejected") {
-    return "Rifiutato";
+  if (status === 'rejected') {
+    return 'Rifiutato';
   }
 
-  return "";
+  return '';
 };

@@ -39,7 +39,7 @@ const OrderPreview: React.FC<{
 
     audio.addEventListener("ended", playAudio);
 
-    playAudio()
+    playAudio();
 
     return () => clearInterval(minuteTimer);
   }, []);

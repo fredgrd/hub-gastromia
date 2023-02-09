@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Order } from "../../models/order";
-import "./order-details.css";
+import React, { useEffect, useState } from 'react';
+import { Order } from '../../models/order';
+import './order-details.css';
 
-import OrderDetailsItem from "./order-details-item";
-import { fetchOrder, updateOrderStatus } from "../../app/services/order-api";
-import { useAppDispatch } from "../../app/hooks";
-import { setToastState } from "../../app/store-slices/app-slice";
-import LoadingSpinner from "../loading-spinner/loading-spinner";
+import OrderDetailsItem from './order-details-item';
+import { fetchOrder, updateOrderStatus } from '../../app/services/order-api';
+import { useAppDispatch } from '../../app/hooks';
+import { setToastState } from '../../app/store-slices/app-slice';
+import LoadingSpinner from '../loading-spinner/loading-spinner';
 
 import {
   Badge,
@@ -16,20 +16,20 @@ import {
   Popconfirm,
   Space,
   Typography,
-} from "antd";
-import formatMinuteTime from "../../utils/formatMinuteTime";
+} from 'antd';
+import formatMinuteTime from '../../utils/formatMinuteTime';
 const { Text, Paragraph, Title } = Typography;
 
 const formatColor = (start: number, time: number): string => {
   if (start - time <= 10) {
-    return "red";
+    return 'red';
   }
 
   if (start - time <= 20) {
-    return "pink";
+    return 'pink';
   }
 
-  return "blue";
+  return 'blue';
 };
 
 const OrderDetails: React.FC<{
@@ -75,7 +75,7 @@ const OrderDetails: React.FC<{
     const updatedOrder = await updateOrderStatus(orderID, status);
 
     if (updatedOrder) {
-      if (["completed", "rejected", "refunded"].includes(updatedOrder.status)) {
+      if (['completed', 'rejected', 'refunded'].includes(updatedOrder.status)) {
         fetchOrders();
         cancelSelected();
         setIsLoading(false);
@@ -88,7 +88,7 @@ const OrderDetails: React.FC<{
       dispatch(
         setToastState({
           isOpen: true,
-          message: "We could not update the order status, try again",
+          message: 'We could not update the order status, try again',
         })
       );
     }
@@ -101,19 +101,19 @@ const OrderDetails: React.FC<{
       return null;
     }
 
-    if (order.status === "submitted") {
+    if (order.status === 'submitted') {
       return (
-        <Space style={{ marginTop: "10px" }}>
+        <Space style={{ marginTop: '10px' }}>
           <Button
             type="primary"
             loading={isLoading}
-            onClick={() => updateStatus("accepted")}
+            onClick={() => updateStatus('accepted')}
           >
             Accept
           </Button>
           <Popconfirm
             title="Are you sure you want to reject the order?"
-            onConfirm={() => updateStatus("rejected")}
+            onConfirm={() => updateStatus('rejected')}
             placement="left"
           >
             <Button danger loading={isLoading}>
@@ -124,19 +124,19 @@ const OrderDetails: React.FC<{
       );
     }
 
-    if (order.status === "accepted") {
+    if (order.status === 'accepted') {
       return (
-        <Space style={{ marginTop: "10px" }}>
+        <Space style={{ marginTop: '10px' }}>
           <Button
             type="primary"
             loading={isLoading}
-            onClick={() => updateStatus("ready")}
+            onClick={() => updateStatus('ready')}
           >
             Ready
           </Button>
           <Popconfirm
             title="Are you sure you want to reject the order?"
-            onConfirm={() => updateStatus("rejected")}
+            onConfirm={() => updateStatus('rejected')}
             placement="left"
           >
             <Button danger loading={isLoading}>
@@ -147,12 +147,12 @@ const OrderDetails: React.FC<{
       );
     }
 
-    if (order.status === "ready") {
+    if (order.status === 'ready') {
       return (
-        <Space style={{ marginTop: "10px" }}>
+        <Space style={{ marginTop: '10px' }}>
           <Popconfirm
             title="Before marking the order completed make sure the customer paid"
-            onConfirm={() => updateStatus("completed")}
+            onConfirm={() => updateStatus('completed')}
             placement="left"
           >
             <Button danger loading={isLoading}>
@@ -171,39 +171,39 @@ const OrderDetails: React.FC<{
   return (
     <Badge.Ribbon
       text={`${formatMinuteTime(
-        Number(order.interval.split("-")[0])
-      )} - ${formatMinuteTime(Number(order.interval.split("-")[1]))}`}
+        Number(order.interval.split('-')[0])
+      )} - ${formatMinuteTime(Number(order.interval.split('-')[1]))}`}
       color={formatColor(
-        Number(order.interval.split("-")[0]),
+        Number(order.interval.split('-')[0]),
         currentMinuteTime
       )}
     >
       <Card>
-        <Title level={3} style={{ margin: "0px" }}>
+        <Title level={3} style={{ margin: '0px' }}>
           {order.code}
         </Title>
         <div
           style={{
-            display: "flex",
+            display: 'flex',
 
-            justifyContent: "space-between",
+            justifyContent: 'space-between',
           }}
         >
           <div>
             <div>
-              O.UUID:{" "}
+              O.UUID:{' '}
               <Paragraph
                 copyable
-                style={{ display: "inline-block", margin: "0px" }}
+                style={{ display: 'inline-block', margin: '0px' }}
               >
                 {order._id}
               </Paragraph>
             </div>
             <div>
-              U.UUID:{" "}
+              U.UUID:{' '}
               <Paragraph
                 copyable
-                style={{ display: "inline-block", margin: "0px" }}
+                style={{ display: 'inline-block', margin: '0px' }}
               >
                 {order.user_id}
               </Paragraph>
@@ -213,7 +213,7 @@ const OrderDetails: React.FC<{
         </div>
 
         <Title level={4}>{`${count} ${
-          count > 1 ? "articoli" : "articolo"
+          count > 1 ? 'articoli' : 'articolo'
         } • €${(order.total / 1000).toFixed(2)}`}</Title>
 
         <div className="orderdetails-content-products">
@@ -222,15 +222,14 @@ const OrderDetails: React.FC<{
           ))}
         </div>
         <Divider></Divider>
-        <Text strong mark>
-          Payment method:{order.card_payment ? " CARD" : " CASH"}
+        <Text strong>
+          Payment method:{order.card_payment ? ' CARD' : ' CASH'}
         </Text>
-        <Text strong mark style={{ display: "block" }}>
-          {`Pickup scheduled: ${formatMinuteTime(
-            Number(order.interval.split("-")[0])
-          )} -
-          ${formatMinuteTime(Number(order.interval.split("-")[1]))}`}
+        <Text strong style={{ display: 'block' }}>
+          {`${order.user_name} ${order.user_number}`}
         </Text>
+        <Text style={{ display: 'block' }}>Instructions</Text>
+        <Text style={{ display: 'block' }}>{order.info}</Text>
       </Card>
     </Badge.Ribbon>
   );
