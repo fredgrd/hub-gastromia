@@ -172,7 +172,7 @@ const OrderDetails: React.FC<{
     <Badge.Ribbon
       text={`${formatMinuteTime(
         Number(order.interval.split('-')[0])
-      )} - ${formatMinuteTime(Number(order.interval.split('-')[1]))}`}
+      )} ${formatMinuteTime(Number(order.interval.split('-')[1]))}`}
       color={formatColor(
         Number(order.interval.split('-')[0]),
         currentMinuteTime
