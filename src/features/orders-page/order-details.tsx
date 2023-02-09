@@ -182,6 +182,9 @@ const OrderDetails: React.FC<{
         <Title level={3} style={{ margin: '0px' }}>
           {order.code}
         </Title>
+        <Title level={4} style={{ margin: '0px' }}>
+          {`${order.user_name} - ${order.user_number}`}
+        </Title>
         <div
           style={{
             display: 'flex',
@@ -222,13 +225,9 @@ const OrderDetails: React.FC<{
           ))}
         </div>
         <Divider></Divider>
-        <Text strong>
-          Payment method:{order.card_payment ? ' CARD' : ' CASH'}
-        </Text>
         <Text strong style={{ display: 'block' }}>
-          {`${order.user_name} ${order.user_number}`}
+          Instructions
         </Text>
-        <Text style={{ display: 'block' }}>Instructions</Text>
         <Text style={{ display: 'block' }}>{order.info}</Text>
       </Card>
     </Badge.Ribbon>
