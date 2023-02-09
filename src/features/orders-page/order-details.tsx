@@ -183,7 +183,7 @@ const OrderDetails: React.FC<{
           {order.code}
         </Title>
         <Title level={4} style={{ margin: '0px' }}>
-          {`${order.user_name} - ${order.user_number}`}
+          {`${order.user_name} ${order.user_number}`}
         </Title>
         <div
           style={{
