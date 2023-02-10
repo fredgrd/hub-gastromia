@@ -11,7 +11,7 @@
   width: 300px;
   flex-shrink: 0;
 
-  padding: 24px;
+  padding: 24px 100px 24px 24px;
 
   overflow-y: scroll;
 }
