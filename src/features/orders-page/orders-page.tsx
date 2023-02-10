@@ -21,7 +21,6 @@ const OrdersPage: React.FC = () => {
   const [selectedOrder, setSelectedOrder] = useState<string | undefined>();
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [sortFilter, setSortFilter] = useState<string>("arrival");
-  const sortPopup = useRef<HTMLDivElement>(null);
 
   const fetchOrders = async () => {
     const newOrders = await fetchActiveOrders();

@@ -182,7 +182,7 @@ const OrderDetails: React.FC<{
         <Title level={3} style={{ margin: '0px' }}>
           {order.code}
         </Title>
-        <Title level={4} style={{ margin: '0px' }}>
+        <Title level={5} style={{ margin: '0px' }}>
           {`${order.user_name} ${order.user_number}`}
         </Title>
         <div
@@ -225,6 +225,8 @@ const OrderDetails: React.FC<{
           ))}
         </div>
         <Divider></Divider>
+        <Text strong>Payment</Text>
+        <Text mark>{order.card_payment ? 'CARD' : 'CASH'}</Text>
         <Text strong style={{ display: 'block' }}>
           Instructions
         </Text>
