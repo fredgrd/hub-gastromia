@@ -214,18 +214,16 @@ const OrderDetails: React.FC<{
           </div>
           {renderStatusButtons()}
         </div>
-
         <Title level={4}>{`${count} ${
           count > 1 ? 'articoli' : 'articolo'
         } • €${(order.total / 1000).toFixed(2)}`}</Title>
-
         <div className="orderdetails-content-products">
           {order.items.map((item, idx) => (
             <OrderDetailsItem item={item} key={idx} />
           ))}
         </div>
         <Divider></Divider>
-        <Text strong>Payment</Text>
+        <Text strong>Payment:</Text>{' '}
         <Text mark>{order.card_payment ? 'CARD' : 'CASH'}</Text>
         <Text strong style={{ display: 'block' }}>
           Instructions
