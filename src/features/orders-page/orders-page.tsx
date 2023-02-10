@@ -1,32 +1,33 @@
-import React, { useEffect, useRef, useState } from "react";
-import { fetchActiveOrders } from "../../app/services/order-api";
-import { Order } from "../../models/order";
-import OrderPreview from "./order-preview";
-import "./orders-page.css";
+import React, { useEffect, useRef, useState } from 'react';
+import { fetchActiveOrders } from '../../app/services/order-api';
+import { Order } from '../../models/order';
+import OrderPreview from './order-preview';
+import './orders-page.css';
 
 import {
   sortOrderByArrival,
   sortOrdersByInterval,
-} from "../../utils/sortOrders";
+} from '../../utils/sortOrders';
 
-import OrderDetails from "./order-details";
-import { Radio, Segmented } from "antd";
+import OrderDetails from './order-details';
+import { Radio, Segmented } from 'antd';
 
-const acceptedFilter: string[] = ["accepted", "ready", "stalled"];
+const acceptedFilter: string[] = ['accepted', 'ready', 'stalled'];
 
 const OrdersPage: React.FC = () => {
+  const [fetchedOrders, setFetchedOrders] = useState<Order[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [acceptedOrders, setAcceptedOrders] = useState<Order[]>([]);
   const [pendingOrders, setPendingOrders] = useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<string | undefined>();
-  const [statusFilter, setStatusFilter] = useState<string>("all");
-  const [sortFilter, setSortFilter] = useState<string>("arrival");
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [sortFilter, setSortFilter] = useState<string>('arrival');
 
   const fetchOrders = async () => {
     const newOrders = await fetchActiveOrders();
 
     if (newOrders) {
-      updateOrders(newOrders, sortFilter);
+      setFetchedOrders(newOrders);
     }
   };
 
@@ -37,28 +38,32 @@ const OrdersPage: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    updateOrders(fetchedOrders, sortFilter);
+  }, [fetchedOrders]);
+
   const updateOrders = (orders: Order[], sort: string) => {
-    if (sort === "pickup") {
+    if (sort === 'pickup') {
       const sortedOrders = orders.sort(sortOrdersByInterval);
       setOrders(sortedOrders);
       setAcceptedOrders(
         sortedOrders.filter((e) => acceptedFilter.includes(e.status))
       );
-      setPendingOrders(sortedOrders.filter((e) => e.status === "submitted"));
+      setPendingOrders(sortedOrders.filter((e) => e.status === 'submitted'));
     }
 
-    if (sort === "arrival") {
+    if (sort === 'arrival') {
       const sortedOrders = orders.sort(sortOrderByArrival);
       setOrders(sortedOrders);
       setAcceptedOrders(
         sortedOrders.filter((e) => acceptedFilter.includes(e.status))
       );
-      setPendingOrders(sortedOrders.filter((e) => e.status === "submitted"));
+      setPendingOrders(sortedOrders.filter((e) => e.status === 'submitted'));
     }
   };
 
   const renderFilter = () => {
-    if (statusFilter === "all") {
+    if (statusFilter === 'all') {
       return (
         <React.Fragment>
           {orders.map((order, idx) => (
@@ -72,7 +77,7 @@ const OrdersPage: React.FC = () => {
       );
     }
 
-    if (statusFilter === "accepted") {
+    if (statusFilter === 'accepted') {
       return (
         <React.Fragment>
           {acceptedOrders.map((order, idx) => (
@@ -86,7 +91,7 @@ const OrdersPage: React.FC = () => {
       );
     }
 
-    if (statusFilter === "pending") {
+    if (statusFilter === 'pending') {
       return (
         <React.Fragment>
           {pendingOrders.map((order, idx) => (
@@ -109,13 +114,13 @@ const OrdersPage: React.FC = () => {
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
           >
-            <Radio.Button type="default" value={"all"}>
+            <Radio.Button type="default" value={'all'}>
               All
             </Radio.Button>
-            <Radio.Button type="default" value={"accepted"}>
+            <Radio.Button type="default" value={'accepted'}>
               Accepted
             </Radio.Button>
-            <Radio.Button type="default" value={"pending"}>
+            <Radio.Button type="default" value={'pending'}>
               Pending
             </Radio.Button>
           </Radio.Group>
@@ -128,10 +133,10 @@ const OrdersPage: React.FC = () => {
                 updateOrders(orders, e.target.value);
               }}
             >
-              <Radio type="default" value={"arrival"}>
+              <Radio type="default" value={'arrival'}>
                 Arrival time
               </Radio>
-              <Radio type="default" value={"pickup"}>
+              <Radio type="default" value={'pickup'}>
                 Pickup time
               </Radio>
             </Radio.Group>
