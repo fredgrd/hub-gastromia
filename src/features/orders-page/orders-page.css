@@ -17,12 +17,13 @@
 }
 
 .orderspage-activeorders-filters {
-  position: sticky;
+  position: fixed;
   top: 0px;
-  left: 0px;
-  width: 100%;
+  left: 224px;
+  width: 270px;
   z-index: 1000;
 
+  padding-top: 24px;
   padding-bottom: 8px;
 
   background-color: #f6f6f6;
