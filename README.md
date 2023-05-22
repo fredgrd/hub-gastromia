@@ -11,3 +11,27 @@ On top of that, staff members are able to use the hub manager to add, update or 
 Finally the dashboard allows the staff to easily visualize all previous orders, and their respective status, and order details. 
 
 ![preview](preview.gif)
+
+## Tech Stack
+
+Backend:
+
+- NodeJS
+- Express
+- AWS SDK
+- Mongoose
+- Twilio SDK
+- Stripe SDK
+
+Frontend:
+
+- React
+- React Router
+- React Stripe (iframes for custom payment input)
+
+Services:
+
+- AWS S3 + CloudFront (Storage and delivery of media assets)
+- Twilio Verify (OTP Authentication)
+- Whatsapp Business Platform (Order updates)
+- MongoDB Atlas (DB)
