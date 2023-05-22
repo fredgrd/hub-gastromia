@@ -40,3 +40,9 @@ Services:
 
 ### Refund order
 ![refund](refund.gif)
+
+### Item unavailable
+![unavailable](unavailable.gif)
+
+### Edit item
+![edit](edit.gif)
