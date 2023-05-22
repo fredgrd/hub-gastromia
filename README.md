@@ -1,4 +1,4 @@
-![logo](gastromia_logo.png)
+![logo](hub_manager.png)
 
 ## What is Hub Manager?
 
