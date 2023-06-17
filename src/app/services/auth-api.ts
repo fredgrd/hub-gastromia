@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { isOperator, Operator } from "../../models/operator";
 
-const baseUrl = "https://api.gastromia.com";
+const baseUrl = "https://api.gastromia.app";
 
 export const login = async (
   email: string,

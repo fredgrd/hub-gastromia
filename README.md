@@ -9,11 +9,11 @@ The core components that make up the system are:
 - [hub-gastromia](https://github.com/fredgrd/hub-gastromia/) – Internal dashboard (live orders, item editing, statistics)
 - [api-gastromia](https://github.com/fredgrd/api-gastromia/) – Backend powering both web apps and connected services.
 
-## What is [hub-manager](https://hub.gastromia.com/)?
+## What is [hub-manager](https://hub.gastromia.app/)?
 
 The hub manager is a web app developed with tablet use in mind. Its goal is to provide a streamlined kitchen dashboard to power Gastromia's kitchen operations.
 
-The hub manager allows the kitchen staff to control the flow of live orders, and update the items' availability. The changes are then reflected on the customer-facing [client](https://gastromia.com).
+The hub manager allows the kitchen staff to control the flow of live orders, and update the items' availability. The changes are then reflected on the customer-facing [client](https://gastromia.app).
 
 On top of that, staff members are able to use the hub manager to add, update or remove any item present on the menu.
 

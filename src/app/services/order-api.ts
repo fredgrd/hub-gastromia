@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { areOrders, isOrder, Order } from "../../models/order";
 
-const baseUrl = "https://api.gastromia.com";
+const baseUrl = "https://api.gastromia.app";
 
 export const fetchActiveOrders = async (): Promise<Order[]> => {
   try {

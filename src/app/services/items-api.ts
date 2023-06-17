@@ -8,7 +8,7 @@ import {
   ItemAttribute,
 } from "../../models/item";
 
-const baseUrl = "https://api.gastromia.com";
+const baseUrl = "https://api.gastromia.app";
 
 export const fetchItem = async (itemID: string): Promise<Item | null> => {
   try {
